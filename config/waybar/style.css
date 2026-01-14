@@ -1,0 +1,78 @@
+* {
+    all: unset;
+    font-family: "IBM Plex Mono";
+    font-size: 11px;
+}
+
+window#waybar {
+    background: transparent;
+}
+
+/* Left pill: workspaces */
+#workspaces {
+    background: rgba(0, 0, 0, 1);
+    padding: 6px 10px;
+    border-radius: 999px;
+}
+
+/* Workspace dots */
+#workspaces button {
+    padding: 0 5px;
+    color: #666666;
+}
+
+#workspaces button.active {
+    color: #f2f2f2;
+}
+
+/* Client title pill */
+#window {
+    background: rgba(0, 0, 0, 1);
+    padding: 6px 12px;
+    border-radius: 999px;
+    margin-left: 8px;
+
+    color: #bbbbbb;
+    letter-spacing: 0.5px;
+}
+
+/* Hide the pill when no window is focused */
+#window.empty {
+    opacity: 0;
+}
+
+/* Center pill: clock (bigger & bolder) */
+#clock {
+    background: rgba(0, 0, 0, 1);
+    padding: 8px 20px;
+    border-radius: 999px;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    color: #f5f5f5;
+    letter-spacing: 1.2px;
+
+    font-feature-settings: "tnum";
+}
+
+/* Right-side pills */
+/* Right-side pills */
+#cpu,
+#memory,
+#pulseaudio,
+#network {
+    background: rgba(0, 0, 0, 1);
+    padding: 6px 12px;
+    border-radius: 999px;
+    margin-left: 8px;
+
+    color: #e6e6e6;
+    letter-spacing: 0.5px;
+}
+
+/* Quiet / inactive states */
+#pulseaudio.muted,
+#network.disconnected {
+    color: #777777;
+}

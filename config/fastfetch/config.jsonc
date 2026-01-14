@@ -1,0 +1,30 @@
+{
+  "logo": {
+    "type": "builtin",
+    "source": "arch",
+    "padding": {
+      "right": 2,
+    },
+  },
+
+  "modules": [
+    "title",
+    "separator",
+
+    { "type": "os", "key": "OS" },
+    { "type": "kernel", "key": "Kernel" },
+    { "type": "uptime", "key": "Uptime" },
+    { "type": "packages", "key": "Pkgs" },
+
+    "separator",
+
+    { "type": "wm", "key": "WM" },
+    { "type": "terminal", "key": "Term" },
+    { "type": "shell", "key": "Shell" },
+
+    "separator",
+
+    { "type": "cpu", "key": "CPU" },
+    { "type": "memory", "key": "RAM" },
+  ],
+}

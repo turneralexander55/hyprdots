@@ -1,0 +1,11 @@
+{
+  "positionX": "right",
+  "positionY": "top",
+  "layer": "overlay",
+  "control-center-layer": "overlay",
+
+  "popup": {
+    "enabled": true,
+    "timeout": 6
+  }
+}

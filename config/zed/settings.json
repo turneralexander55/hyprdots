@@ -1,0 +1,19 @@
+{
+  "theme": "The Dark Side",
+
+  "buffer_font_family": "IBM Plex Mono",
+  "buffer_font_size": 14,
+  "ui_font_size": 14,
+
+  "cursor_shape": "block",
+  "cursor_blink": true,
+
+  "highlight_current_line": true,
+  "selection_highlight": true,
+
+  "minimap": {
+    "enabled": false,
+  },
+
+  "smooth_scrolling": true,
+}
