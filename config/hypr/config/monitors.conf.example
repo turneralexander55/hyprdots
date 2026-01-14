@@ -1,8 +1,19 @@
-################
-### MONITORS ###
-################
+################################################################################
+#                                                                              #
+#                                  MONITORS                                    #
+#                                                                              #
+################################################################################
 
-# See https://wiki.hypr.land/Configuring/Monitors/
-monitor= DP-1,3440x1440@165, 0x0, 1
-monitor= DP-2,3440x1440@165, 0x-1440, 1
-monitor= HDMI-A-2, 1920x1080@60, 3440x-660, 1, transform, 1
+# This file defines the physical monitor layout and properties.
+#
+# Use this file to configure:
+#   • Resolution and refresh rate per display
+#   • Monitor positioning in the global layout
+#   • Scaling factors
+#   • Rotation / transforms for vertical or rotated displays
+#
+# Monitor coordinates are relative to the global layout space.
+# Negative offsets are valid and useful for stacked or asymmetric setups.
+#
+# See:
+# https://wiki.hypr.land/Configuring/Monitors/
