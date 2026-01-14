@@ -1,0 +1,17 @@
+#################
+### AUTOSTART ###
+#################
+
+# Autostart necessary processes (like notifications daemons, status bars, etc.)
+# Or execute your favorite apps at launch like this:
+
+###System###
+exec-once = xwaylandvideobridge &
+exec-once = systemctl --user start hyprpolkitagent &
+
+###Desktop###
+exec-once = swaync &
+exec-once = hyprpaper &
+exec-once = hypridle &
+exec-once = waybar &
+exec-once = mako &
