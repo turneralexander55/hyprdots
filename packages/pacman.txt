@@ -1,0 +1,86 @@
+# NOTE:
+# Base system, kernel, drivers, audio, networking, and partitioning
+# are handled by archinstall.
+#
+# This file defines ONLY desktop, UI, theming, and user-level tools
+# that my dotfiles and daily workflow expect to exist.
+
+# ============================================================
+# Hyprland / Wayland core
+# ============================================================
+hyprland
+hyprpaper
+hypridle
+hyprlock
+waybar
+rofi
+kitty
+swaync
+zed-editor
+xdg-desktop-portal
+xdg-desktop-portal-hyprland
+
+# ============================================================
+# Screenshots / screen sharing (Wayland)
+# ============================================================
+hyprshot
+
+# ============================================================
+# Audio / video (ensure present; may already be installed)
+# ============================================================
+pipewire
+pipewire-alsa
+pipewire-pulse
+wireplumber
+
+# ============================================================
+# Thunar file manager + filesystem integration
+# ============================================================
+thunar
+thunar-volman
+tumbler
+gvfs
+gvfs-mtp
+gvfs-smb
+
+# ============================================================
+# GTK theming tools (Wayland-friendly)
+# ============================================================
+nwg-look
+papirus-icon-theme
+
+# ============================================================
+# Polkit authentication agent
+# ============================================================
+hyprpolkitagent
+
+# ============================================================
+# Clipboard (Wayland)
+# ============================================================
+wl-clipboard
+cliphist
+
+# ============================================================
+# Fonts (system-wide sanity baseline)
+# ============================================================
+ttf-dejavu
+noto-fonts
+noto-fonts-cjk
+noto-fonts-emoji
+ttf-jetbrains-mono
+ttf-nerd-fonts-symbols
+
+# ============================================================
+# Shell environment
+# ============================================================
+zsh
+zsh-syntax-highlighting
+zsh-autosuggestions
+
+# ============================================================
+# Terminal utilities
+# ============================================================
+fastfetch
+btop
+cava
+yazi

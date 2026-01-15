@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# ------------------------------------------------------------
+# Hyprdots install script
+# Stage 1: Pacman packages
+# ------------------------------------------------------------
+
+echo "==> Starting hyprdots install (stage 1)"
+
+# Ensure we are running on Arch Linux
+if [[ ! -f /etc/arch-release ]]; then
+  echo "ERROR: This script is intended for Arch Linux only."
+  exit 1
+fi
+
+# Ensure pacman exists
+if ! command -v pacman &>/dev/null; then
+  echo "ERROR: pacman not found. Is this an Arch-based system?"
+  exit 1
+fi
+
+# Ensure package list exists
+PACMAN_LIST="$(dirname "$0")/../packages/pacman.txt"
+
+if [[ ! -f "$PACMAN_LIST" ]]; then
+  echo "ERROR: pacman package list not found at $PACMAN_LIST"
+  exit 1
+fi
+
+echo "==> Installing pacman packages..."
+
+sudo pacman -S --needed --noconfirm - < "$PACMAN_LIST"
+
+echo "==> Pacman packages installed successfully."
+
+# ------------------------------------------------------------
+# Stage 2: AUR helper (paru) + AUR packages
+# ------------------------------------------------------------
+
+echo "==> Starting AUR setup (stage 2)"
+
+# Ensure git exists (required for AUR builds)
+if ! command -v git &>/dev/null; then
+  echo "==> Installing git..."
+  sudo pacman -S --needed --noconfirm git
+fi
+
+# Ensure base-devel exists (required for makepkg)
+if ! pacman -Qi base-devel &>/dev/null; then
+  echo "==> Installing base-devel..."
+  sudo pacman -S --needed --noconfirm base-devel
+fi
+
+# Ensure paru is installed
+if ! command -v paru &>/dev/null; then
+  echo "==> Paru not found. Bootstrapping paru..."
+
+  PARU_DIR="$(mktemp -d)"
+  git clone https://aur.archlinux.org/paru.git "$PARU_DIR/paru"
+  pushd "$PARU_DIR/paru" >/dev/null
+
+  makepkg -si --noconfirm
+
+  popd >/dev/null
+  rm -rf "$PARU_DIR"
+
+  echo "==> Paru installed successfully."
+else
+  echo "==> Paru already installed. Skipping bootstrap."
+fi
+
+# Ensure AUR package list exists
+AUR_LIST="$(dirname "$0")/../packages/aur.txt"
+
+if [[ ! -f "$AUR_LIST" ]]; then
+  echo "ERROR: AUR package list not found at $AUR_LIST"
+  exit 1
+fi
+
+echo "==> Installing AUR packages..."
+
+paru -S --needed --noconfirm - < "$AUR_LIST"
+
+echo "==> AUR packages installed successfully."
+
+# ------------------------------------------------------------
+# Stage 3: Deploy dotfiles into ~/.config
+# ------------------------------------------------------------
+
+DEPLOY_SCRIPT="$(dirname "$0")/deploy-configs.sh"
+
+if [[ ! -x "$DEPLOY_SCRIPT" ]]; then
+  echo "ERROR: deploy-configs.sh not found or not executable."
+  exit 1
+fi
+
+echo "==> Deploying dotfiles into ~/.config"
+"$DEPLOY_SCRIPT" --force

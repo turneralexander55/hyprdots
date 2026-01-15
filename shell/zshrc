@@ -1,0 +1,144 @@
+# ===============================
+# Force truecolor
+# ===============================
+export COLORTERM=truecolor
+export TERM=xterm-kitty
+
+
+# ===============================
+# Lines configured by zsh-newuser-install
+# ===============================
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+bindkey -e
+# End of lines configured by zsh-newuser-install
+
+
+# ===============================
+# Lines added by compinstall
+# ===============================
+zstyle :compinstall filename '$HOME/.zshrc'
+
+
+# ===============================
+# Enable Spaceship prompt
+# ===============================
+autoload -U promptinit; promptinit
+prompt spaceship
+
+
+# ===============================
+# Spaceship config
+# ===============================
+SPACESHIP_PROMPT_ORDER=(
+  user
+  dir
+  git
+  exec_time
+  line_sep
+  char
+)
+
+SPACESHIP_CHAR_SYMBOL="❯"
+SPACESHIP_CHAR_SUFFIX=" "
+
+SPACESHIP_DIR_TRUNC=3
+SPACESHIP_GIT_BRANCH_COLOR="white"
+SPACESHIP_GIT_STATUS_COLOR="white"
+
+SPACESHIP_USER_SHOW=always
+SPACESHIP_HOST_SHOW=false
+
+SPACESHIP_EXEC_TIME_SHOW=true
+SPACESHIP_EXEC_TIME_THRESHOLD=2
+
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
+
+# ===============================
+# Aliases
+# ===============================
+alias cmatrix='cmatrix -C white -a -b -u 6'
+
+
+# ===============================
+# Initialize syntax highlighting
+# ===============================
+ZSH_HIGHLIGHT_MAXLENGTH=512
+typeset -gA ZSH_HIGHLIGHT_STYLES
+
+
+# ===============================
+# Frost zsh syntax highlighting
+# ===============================
+# Base/default text
+ZSH_HIGHLIGHT_STYLES[default]='fg=#EAF2FF'
+
+# Commands
+ZSH_HIGHLIGHT_STYLES[command]='fg=#18a9c9,bold'
+
+# Builtins / aliases / functions
+ZSH_HIGHLIGHT_STYLES[builtin]='fg=#D6E8FF'
+ZSH_HIGHLIGHT_STYLES[alias]='fg=#D6E8FF'
+ZSH_HIGHLIGHT_STYLES[function]='fg=#D6E8FF'
+
+# Arguments
+ZSH_HIGHLIGHT_STYLES[argument]='fg=#EAF2FF'
+
+# Options / flags
+ZSH_HIGHLIGHT_STYLES[options]='fg=#1b3dc4,bold'
+
+# Paths
+ZSH_HIGHLIGHT_STYLES[path]='fg=#18a9c9,underline'
+
+# Globbing
+ZSH_HIGHLIGHT_STYLES[globbing]='fg=#A9D7FF'
+
+# Quoted strings
+ZSH_HIGHLIGHT_STYLES[quoted]='fg=#9FC7FF'
+ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]='fg=#9FC7FF'
+
+# Variables
+ZSH_HIGHLIGHT_STYLES[variable]='fg=#C7E3FF'
+
+# Assignments
+ZSH_HIGHLIGHT_STYLES[assign]='fg=#D6E8FF'
+
+# Comments
+ZSH_HIGHLIGHT_STYLES[comment]='fg=#7FA6D6'
+
+# Unknown tokens
+ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=#FFFFFF,bg=#162338'
+
+ZSH_HIGHLIGHT_STYLES[precommand]='fg=#1b3dc4'
+# ===============================
+# Autosuggestions
+# ===============================
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+
+# ===============================
+# Colored coreutils
+# ===============================
+eval "$(dircolors -b)"
+
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+alias ip='ip -color=auto'
+
+
+# ===============================
+# Syntax highlighting (must be last plugin)
+# ===============================
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+
+# ===============================
+# Fastfetch (interactive only)
+# ===============================
+[[ $- == *i* ]] && fastfetch --color white --logo-color-1 white --logo-color-2 white

@@ -20,16 +20,16 @@
 # System Services
 # Core background services required for proper session behavior.
 # ─────────────────────────────────────────────────────────────────────────────
-#exec-once = xwaylandvideobridge &
-#exec-once = systemctl --user start hyprpolkitagent &
+exec-once = xwaylandvideobridge &
+exec-once = systemctl --user start hyprpolkitagent &
 
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Desktop Environment
 # Visual and interaction-layer components.
 # ─────────────────────────────────────────────────────────────────────────────
-#exec-once = swaync &
-#exec-once = hyprpaper &
-#exec-once = hypridle &
-#exec-once = waybar &
-#exec-once = mako &
+exec-once = swaync &
+exec-once = hyprpaper &
+exec-once = hypridle &
+exec-once = waybar &
+exec-once = mako &

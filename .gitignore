@@ -1,3 +1,8 @@
 # Hyprland machine-specific
 config/hypr/config/monitors.conf
 config/hypr/config/autostart.conf
+
+# User-specific Hypr configs
+config/hypr/hyprpaper.conf
+config/hypr/config/monitors.conf
+config/hypr/config/autostart.conf
