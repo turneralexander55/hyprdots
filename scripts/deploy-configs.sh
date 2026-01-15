@@ -189,3 +189,14 @@ gsettings set org.gnome.desktop.interface icon-theme "Snow"
 gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
 
 echo "==> GTK theme settings applied"
+
+
+DEPLOY_SCRIPT="$(dirname "$0")/deploy-shell.sh"
+
+if [[ ! -x "$DEPLOY_SCRIPT" ]]; then
+  echo "ERROR: deploy-shell.sh not found or not executable."
+  exit 1
+fi
+
+echo "==> Deploying shell"
+"$DEPLOY_SCRIPT" --force
