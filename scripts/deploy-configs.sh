@@ -188,12 +188,12 @@ fi
 # ------------------------------------------------------------
 # Hyprpaper config (special-case location)
 # ------------------------------------------------------------
-
+echo "test1"
 echo "==> Installing hyprpaper.conf (forced)"
 
 HYPERPAPER_EXAMPLE="$TARGET_DIR/hypr/config/hyprpaper.conf.example"
 HYPERPAPER_TARGET="$TARGET_DIR/hypr/hyprpaper.conf"
-
+echo "test2"
 # Ensure destination directory exists
 mkdir -p "$(dirname "$HYPERPAPER_TARGET")"
 
@@ -204,7 +204,7 @@ if [[ -f "$HYPERPAPER_EXAMPLE" ]]; then
 else
   echo "WARNING: hyprpaper.conf.example not found, skipping"
 fi
-
+echo "test3"
 # ------------------------------------------------------------
 # Stage 4: GTK theme activation
 # ------------------------------------------------------------
