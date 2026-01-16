@@ -156,19 +156,34 @@ echo "==> Configuration deployment complete."
 # Install .example configs (only if missing)
 # ------------------------------------------------------------
 
-echo "==> Installing default config templates (.example)"
+echo "==> Installing Hyprland config templates (.example)"
+echo
 
-find "$TARGET_DIR/hypr" -name "*.example" | while read -r example; do
-  target="${example%.example}"
+HYPER_CONFIG_DIR="$TARGET_DIR/hypr/config"
 
-  if [[ -e "$target" ]]; then
-    echo "Skipping $(basename "$target") (already exists)"
-    continue
-  fi
+if [[ -d "$HYPER_CONFIG_DIR" ]]; then
+  find "$HYPER_CONFIG_DIR" -name "*.example" | sort | while read -r example; do
+    target="${example%.example}"
+    name="$(basename "$target")"
 
-  echo "Installing $(basename "$target") from template"
-  cp "$example" "$target"
-done
+    read -r -p "Install config '$name'? [y/N] " reply
+    echo
+
+    case "$reply" in
+      y|Y|yes|YES)
+        echo "Installing $name"
+        rm -f "$target"
+        cp "$example" "$target"
+        ;;
+      *)
+        echo "Skipping $name"
+        ;;
+    esac
+  done
+else
+  echo "No Hyprland config directory found; skipping template installation."
+fi
+
 
 # ------------------------------------------------------------
 # Hyprpaper config (special-case location)
