@@ -22,6 +22,7 @@ xdg-desktop-portal-hyprland
 xdg-desktop-portal-gtk
 dbus
 xorg-xwayland
+nano
 
 # ============================================================
 # Screenshots / screen sharing (Wayland)

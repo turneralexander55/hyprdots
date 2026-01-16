@@ -184,16 +184,25 @@ else
   echo "No Hyprland config directory found; skipping template installation."
 fi
 
+
 # ------------------------------------------------------------
 # Hyprpaper config (special-case location)
 # ------------------------------------------------------------
 
+echo "==> Checking hyprpaper configuration"
+
 HYPERPAPER_EXAMPLE="$TARGET_DIR/hypr/config/hyprpaper.conf.example"
 HYPERPAPER_TARGET="$TARGET_DIR/hypr/hyprpaper.conf"
 
-if [[ -f "$HYPERPAPER_EXAMPLE" && ! -f "$HYPERPAPER_TARGET" ]]; then
-  echo "Installing hyprpaper.conf from template"
-  cp "$HYPERPAPER_EXAMPLE" "$HYPERPAPER_TARGET"
+if [[ -f "$HYPERPAPER_EXAMPLE" ]]; then
+  if [[ -f "$HYPERPAPER_TARGET" ]]; then
+    echo "Skipping hyprpaper.conf (already exists)"
+  else
+    echo "Installing hyprpaper.conf from template"
+    cp "$HYPERPAPER_EXAMPLE" "$HYPERPAPER_TARGET"
+  fi
+else
+  echo "No hyprpaper.conf.example found; skipping"
 fi
 
 # ------------------------------------------------------------
