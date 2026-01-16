@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
-
 # ------------------------------------------------------------
 # deploy-configs.sh
 # Copies dotfiles into ~/.config with guarded overwrites
