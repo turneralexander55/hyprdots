@@ -32,7 +32,7 @@ exec-once = /usr/lib/xdg-desktop-portal
 # Visual and interaction-layer components.
 # ─────────────────────────────────────────────────────────────────────────────
 exec-once = swaync &
-exec-once = hyprpaper &
+exec-once = hyprpaper --config ~/.config/hypr/config/hyprpaper.conf &
 exec-once = hypridle &
 exec-once = waybar &
 exec-once = mako &
