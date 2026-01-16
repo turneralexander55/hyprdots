@@ -16,7 +16,7 @@ waybar
 rofi
 kitty
 swaync
-zed-editor
+zed
 xdg-desktop-portal
 xdg-desktop-portal-hyprland
 

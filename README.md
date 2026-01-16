@@ -26,4 +26,12 @@ This structure reflects real-world infrastructure and DevOps best practices.
 
 ---
 
+Install with:
+
+git clone https://github.com/turneralexander55/hyprdots.git ~/hyprdots
+cd ~/hyprdots
+chmod +x scripts/*.sh
+./scripts/install.sh
+
+
 ## Repository Structure
