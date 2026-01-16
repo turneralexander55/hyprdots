@@ -6,3 +6,4 @@ config/hypr/config/autostart.conf
 config/hypr/hyprpaper.conf
 config/hypr/config/monitors.conf
 config/hypr/config/autostart.conf
+config/hypr/hyprland.conf
