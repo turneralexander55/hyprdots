@@ -39,6 +39,9 @@ echo "==> You will be prompted before each directory is overwritten"
 DOTFILES_DIR="$(dirname "$0")/../config"
 TARGET_DIR="$HOME/.config"
 
+# Ensure ~/.config exists (fresh installs may not have it)
+mkdir -p "$TARGET_DIR"
+
 # Explicit list of config directories we manage
 CONFIGS=(
   hypr
