@@ -171,6 +171,18 @@ find "$TARGET_DIR/hypr" -name "*.example" | while read -r example; do
 done
 
 # ------------------------------------------------------------
+# Hyprpaper config (special-case location)
+# ------------------------------------------------------------
+
+HYPERPAPER_EXAMPLE="$TARGET_DIR/hypr/config/hyprpaper.conf.example"
+HYPERPAPER_TARGET="$TARGET_DIR/hypr/hyprpaper.conf"
+
+if [[ -f "$HYPERPAPER_EXAMPLE" && ! -f "$HYPERPAPER_TARGET" ]]; then
+  echo "Installing hyprpaper.conf from template"
+  cp "$HYPERPAPER_EXAMPLE" "$HYPERPAPER_TARGET"
+fi
+
+# ------------------------------------------------------------
 # Stage 4: GTK theme activation
 # ------------------------------------------------------------
 
@@ -192,14 +204,3 @@ gsettings set org.gnome.desktop.interface icon-theme "Snow"
 gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
 
 echo "==> GTK theme settings applied"
-
-
-DEPLOY_SCRIPT="$(dirname "$0")/deploy-shell.sh"
-
-if [[ ! -x "$DEPLOY_SCRIPT" ]]; then
-  echo "ERROR: deploy-shell.sh not found or not executable."
-  exit 1
-fi
-
-echo "==> Deploying shell"
-"$DEPLOY_SCRIPT" --force

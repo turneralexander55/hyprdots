@@ -19,6 +19,9 @@ swaync
 zed
 xdg-desktop-portal
 xdg-desktop-portal-hyprland
+xdg-desktop-portal-gtk
+dbus
+xorg-xwayland
 
 # ============================================================
 # Screenshots / screen sharing (Wayland)

@@ -1,117 +1,70 @@
 #!/usr/bin/env bash
-
 set -euo pipefail
 
 # ------------------------------------------------------------
-# Hyprdots install script
-# Stage 1: Pacman packages
+# Hyprdots installer orchestrator
 # ------------------------------------------------------------
 
-echo "==> Starting hyprdots install (stage 1)"
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
-# Ensure we are running on Arch Linux
-if [[ ! -f /etc/arch-release ]]; then
-  echo "ERROR: This script is intended for Arch Linux only."
-  exit 1
-fi
-
-# Ensure pacman exists
-if ! command -v pacman &>/dev/null; then
-  echo "ERROR: pacman not found. Is this an Arch-based system?"
-  exit 1
-fi
-
-# Ensure package list exists
-PACMAN_LIST="$(dirname "$0")/../packages/pacman.txt"
-
-if [[ ! -f "$PACMAN_LIST" ]]; then
-  echo "ERROR: pacman package list not found at $PACMAN_LIST"
-  exit 1
-fi
-
-echo "==> Installing pacman packages..."
-
-mapfile -t PACMAN_PACKAGES < <(
-  grep -Ev '^\s*#|^\s*$' "$PACMAN_LIST"
-)
-
-if [[ "${#PACMAN_PACKAGES[@]}" -eq 0 ]]; then
-  echo "No pacman packages to install."
-else
-  sudo pacman -S --needed --noconfirm "${PACMAN_PACKAGES[@]}"
-fi
-
-echo "==> Pacman packages installed successfully."
-
+echo "============================================================"
+echo " Hyprdots Installer"
+echo "============================================================"
+echo
 
 # ------------------------------------------------------------
-# Stage 2: AUR helper (paru) + AUR packages
+# Stage 1: Install packages (pacman + AUR)
 # ------------------------------------------------------------
 
-echo "==> Starting AUR setup (stage 2)"
+echo "==> Stage 1: Installing packages"
+echo
 
-# Ensure git exists (required for AUR builds)
-if ! command -v git &>/dev/null; then
-  echo "==> Installing git..."
-  sudo pacman -S --needed --noconfirm git
-fi
+"$SCRIPT_DIR/install-packages.sh"
 
-# Ensure base-devel exists (required for makepkg)
-if ! pacman -Qi base-devel &>/dev/null; then
-  echo "==> Installing base-devel..."
-  sudo pacman -S --needed --noconfirm base-devel
-fi
-
-# Ensure paru is installed
-if ! command -v paru &>/dev/null; then
-  echo "==> Paru not found. Bootstrapping paru..."
-
-  PARU_DIR="$(mktemp -d)"
-  git clone https://aur.archlinux.org/paru.git "$PARU_DIR/paru"
-  pushd "$PARU_DIR/paru" >/dev/null
-
-  makepkg -si --noconfirm
-
-  popd >/dev/null
-  rm -rf "$PARU_DIR"
-
-  echo "==> Paru installed successfully."
-else
-  echo "==> Paru already installed. Skipping bootstrap."
-fi
-
-# Ensure AUR package list exists
-AUR_LIST="$(dirname "$0")/../packages/aur.txt"
-
-if [[ ! -f "$AUR_LIST" ]]; then
-  echo "ERROR: AUR package list not found at $AUR_LIST"
-  exit 1
-fi
-
-echo "==> Installing AUR packages..."
-
-mapfile -t AUR_PACKAGES < <(
-  grep -Ev '^\s*#|^\s*$' "$AUR_LIST"
-)
-
-if [[ "${#AUR_PACKAGES[@]}" -eq 0 ]]; then
-  echo "No AUR packages to install."
-else
-  paru -S --needed --noconfirm "${AUR_PACKAGES[@]}"
-fi
-
-echo "==> AUR packages installed successfully."
+echo
+echo "==> Package installation complete"
+echo
 
 # ------------------------------------------------------------
-# Stage 3: Deploy dotfiles into ~/.config
+# Stage 2: Deploy configuration files
 # ------------------------------------------------------------
 
-DEPLOY_SCRIPT="$(dirname "$0")/deploy-configs.sh"
+echo "==> Stage 2: Deploying configuration files"
+echo
 
-if [[ ! -x "$DEPLOY_SCRIPT" ]]; then
-  echo "ERROR: deploy-configs.sh not found or not executable."
-  exit 1
-fi
+"$SCRIPT_DIR/deploy-configs.sh" --force
 
-echo "==> Deploying dotfiles into ~/.config"
-"$DEPLOY_SCRIPT" --force
+echo
+echo "==> Configuration deployment complete"
+echo
+
+# ------------------------------------------------------------
+# Stage 3: Deploy shell configuration
+# ------------------------------------------------------------
+
+echo "==> Stage 3: Deploying shell configuration"
+echo
+
+"$SCRIPT_DIR/deploy-shell.sh" --force
+
+echo
+echo "==> Shell configuration complete"
+echo
+
+# ------------------------------------------------------------
+# Stage 4: First-time user initialization
+# ------------------------------------------------------------
+
+echo "==> Stage 4: Initializing user environment"
+echo
+
+"$SCRIPT_DIR/init-user.sh"
+
+echo
+echo "============================================================"
+echo " Hyprdots installation complete"
+echo
+echo " Rebooting."
+echo "============================================================"
+
+reboot +0

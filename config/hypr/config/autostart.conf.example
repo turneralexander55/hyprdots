@@ -22,7 +22,10 @@
 # ─────────────────────────────────────────────────────────────────────────────
 exec-once = xwaylandvideobridge &
 exec-once = systemctl --user start hyprpolkitagent &
-
+exec-once = wl-paste --type text --watch cliphist store
+exec-once = wl-paste --type image --watch cliphist store
+exec-once = /usr/lib/xdg-desktop-portal-hyprland
+exec-once = /usr/lib/xdg-desktop-portal
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Desktop Environment
