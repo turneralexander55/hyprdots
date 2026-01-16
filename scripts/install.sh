@@ -31,9 +31,18 @@ fi
 
 echo "==> Installing pacman packages..."
 
-sudo pacman -S --needed --noconfirm - < "$PACMAN_LIST"
+mapfile -t PACMAN_PACKAGES < <(
+  grep -Ev '^\s*#|^\s*$' "$PACMAN_LIST"
+)
+
+if [[ "${#PACMAN_PACKAGES[@]}" -eq 0 ]]; then
+  echo "No pacman packages to install."
+else
+  sudo pacman -S --needed --noconfirm "${PACMAN_PACKAGES[@]}"
+fi
 
 echo "==> Pacman packages installed successfully."
+
 
 # ------------------------------------------------------------
 # Stage 2: AUR helper (paru) + AUR packages
@@ -81,7 +90,15 @@ fi
 
 echo "==> Installing AUR packages..."
 
-paru -S --needed --noconfirm - < "$AUR_LIST"
+mapfile -t AUR_PACKAGES < <(
+  grep -Ev '^\s*#|^\s*$' "$AUR_LIST"
+)
+
+if [[ "${#AUR_PACKAGES[@]}" -eq 0 ]]; then
+  echo "No AUR packages to install."
+else
+  paru -S --needed --noconfirm "${AUR_PACKAGES[@]}"
+fi
 
 echo "==> AUR packages installed successfully."
 
