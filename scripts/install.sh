@@ -29,7 +29,7 @@ echo
 # Stage 2: First-time user initialization
 # ------------------------------------------------------------
 
-echo "==> Stage 3: Initializing user environment"
+echo "==> Stage 2: Initializing user environment"
 echo
 
 "$SCRIPT_DIR/init-user.sh"

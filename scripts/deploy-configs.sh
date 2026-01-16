@@ -162,7 +162,7 @@ echo
 HYPER_CONFIG_DIR="$TARGET_DIR/hypr/config"
 
 if [[ -d "$HYPER_CONFIG_DIR" ]]; then
-  find "$HYPER_CONFIG_DIR" -name "*.example" | sort | while read -r example; do
+  while read -r example; do
     target="${example%.example}"
     name="$(basename "$target")"
 
@@ -179,11 +179,10 @@ if [[ -d "$HYPER_CONFIG_DIR" ]]; then
         echo "Skipping $name"
         ;;
     esac
-  done
+  done < <(find "$HYPER_CONFIG_DIR" -name "*.example" | sort)
 else
   echo "No Hyprland config directory found; skipping template installation."
 fi
-
 
 # ------------------------------------------------------------
 # Hyprpaper config (special-case location)

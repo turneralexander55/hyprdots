@@ -34,6 +34,7 @@ echo "==> Creating home directory structure"
 mkdir -p \
   "$HOME/Repos" \
   "$HOME/Projects" \
+  "$HOME/Documents" \
   "$HOME/Downloads" \
   "$HOME/Screenshots" \
   "$HOME/Pictures/Wallpapers" \
