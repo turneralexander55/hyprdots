@@ -189,20 +189,20 @@ fi
 # Hyprpaper config (special-case location)
 # ------------------------------------------------------------
 
-echo "==> Checking hyprpaper configuration"
+echo "==> Installing hyprpaper.conf (forced)"
 
 HYPERPAPER_EXAMPLE="$TARGET_DIR/hypr/config/hyprpaper.conf.example"
 HYPERPAPER_TARGET="$TARGET_DIR/hypr/hyprpaper.conf"
 
+# Ensure destination directory exists
+mkdir -p "$(dirname "$HYPERPAPER_TARGET")"
+
+# Only proceed if the template exists in the repo install
 if [[ -f "$HYPERPAPER_EXAMPLE" ]]; then
-  if [[ -f "$HYPERPAPER_TARGET" ]]; then
-    echo "Skipping hyprpaper.conf (already exists)"
-  else
-    echo "Installing hyprpaper.conf from template"
-    cp "$HYPERPAPER_EXAMPLE" "$HYPERPAPER_TARGET"
-  fi
+  cp -f "$HYPERPAPER_EXAMPLE" "$HYPERPAPER_TARGET"
+  echo "hyprpaper.conf installed"
 else
-  echo "No hyprpaper.conf.example found; skipping"
+  echo "WARNING: hyprpaper.conf.example not found, skipping"
 fi
 
 # ------------------------------------------------------------
