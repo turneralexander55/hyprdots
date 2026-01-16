@@ -21,7 +21,7 @@
 
 source = $HOME/.config/hypr/config/aesthetics.conf
 source = $HOME/.config/hypr/config/monitors.conf
-source = $HOME/.config/hypr/config//variables.conf
+source = $HOME/.config/hypr/config/variables.conf
 source = $HOME/.config/hypr/config/autostart.conf
 source = $HOME/.config/hypr/config/environment.conf
 source = $HOME/.config/hypr/config/input-rules.conf

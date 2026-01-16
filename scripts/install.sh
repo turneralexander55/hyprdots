@@ -26,10 +26,19 @@ echo "==> Package installation complete"
 echo
 
 # ------------------------------------------------------------
-# Stage 2: Deploy configuration files
+# Stage 2: First-time user initialization
 # ------------------------------------------------------------
 
-echo "==> Stage 2: Deploying configuration files"
+echo "==> Stage 3: Initializing user environment"
+echo
+
+"$SCRIPT_DIR/init-user.sh"
+
+# ------------------------------------------------------------
+# Stage 3: Deploy configuration files
+# ------------------------------------------------------------
+
+echo "==> Stage 3: Deploying configuration files"
 echo
 
 "$SCRIPT_DIR/deploy-configs.sh" --force
@@ -39,10 +48,10 @@ echo "==> Configuration deployment complete"
 echo
 
 # ------------------------------------------------------------
-# Stage 3: Deploy shell configuration
+# Stage 4: Deploy shell configuration
 # ------------------------------------------------------------
 
-echo "==> Stage 3: Deploying shell configuration"
+echo "==> Stage 4: Deploying shell configuration"
 echo
 
 "$SCRIPT_DIR/deploy-shell.sh" --force
@@ -51,16 +60,6 @@ echo
 echo "==> Shell configuration complete"
 echo
 
-# ------------------------------------------------------------
-# Stage 4: First-time user initialization
-# ------------------------------------------------------------
-
-echo "==> Stage 4: Initializing user environment"
-echo
-
-"$SCRIPT_DIR/init-user.sh"
-
-echo
 echo "============================================================"
 echo " Hyprdots installation complete"
 echo
