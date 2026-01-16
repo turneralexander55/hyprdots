@@ -151,7 +151,7 @@ echo
 echo "==> Configuration deployment complete."
 
 # ------------------------------------------------------------
-# Install .example configs (only if missing)
+# Install .example configs (prompted, safe)
 # ------------------------------------------------------------
 
 echo "==> Installing Hyprland config templates (.example)"
@@ -160,27 +160,37 @@ echo
 HYPER_CONFIG_DIR="$TARGET_DIR/hypr/config"
 
 if [[ -d "$HYPER_CONFIG_DIR" ]]; then
-  while read -r example; do
-    target="${example%.example}"
-    name="$(basename "$target")"
+  shopt -s nullglob
 
-    read -r -p "Install config '$name'? [y/N] " reply
-    echo
+  examples=("$HYPER_CONFIG_DIR"/*.example)
 
-    case "$reply" in
-      y|Y|yes|YES)
-        echo "Installing $name"
-        rm -f "$target"
-        cp "$example" "$target"
-        ;;
-      *)
-        echo "Skipping $name"
-        ;;
-    esac
-  done < <(find "$HYPER_CONFIG_DIR" -name "*.example" | sort)
+  if [[ ${#examples[@]} -eq 0 ]]; then
+    echo "No .example files found."
+  else
+    for example in "${examples[@]}"; do
+      target="${example%.example}"
+      name="$(basename "$target")"
+
+      read -r -p "Install config '$name'? [y/N] " reply
+      echo
+
+      case "$reply" in
+        y|Y|yes|YES)
+          echo "Installing $name"
+          cp -f "$example" "$target"
+          ;;
+        *)
+          echo "Skipping $name"
+          ;;
+      esac
+    done
+  fi
+
+  shopt -u nullglob
 else
   echo "No Hyprland config directory found; skipping template installation."
 fi
+
 
 
 # ------------------------------------------------------------
