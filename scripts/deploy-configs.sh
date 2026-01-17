@@ -3,13 +3,13 @@ set -euo pipefail
 
 # ------------------------------------------------------------
 # deploy-configs.sh
-# Copies dotfiles into ~/.config with guarded overwrites
+# Copies dotfiles from repo into ~/.config
 # Requires --force and prompts per directory
 # ------------------------------------------------------------
 
 FORCE=false
 
-# Parse arguments (explicit and readable)
+# Parse arguments
 if [[ "${1:-}" == "--force" ]]; then
   FORCE=true
 elif [[ $# -gt 0 ]]; then
@@ -32,13 +32,14 @@ echo "==> deploy-configs.sh running in FORCE mode"
 echo "==> You will be prompted before each directory is overwritten"
 
 # ------------------------------------------------------------
-# Pass 2: Per-directory confirmation
+# Setup paths
 # ------------------------------------------------------------
 
-DOTFILES_DIR="$(dirname "$0")/../config"
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+DOTFILES_DIR="$SCRIPT_DIR/../config"
 TARGET_DIR="$HOME/.config"
 
-# Ensure ~/.config exists (fresh installs may not have it)
+# Ensure ~/.config exists
 mkdir -p "$TARGET_DIR"
 
 # Explicit list of config directories we manage
@@ -54,7 +55,10 @@ CONFIGS=(
   zed
 )
 
-# Track which configs the user approved
+# ------------------------------------------------------------
+# Pass 1: Check what exists and get approval
+# ------------------------------------------------------------
+
 APPROVED_CONFIGS=()
 
 echo
@@ -105,7 +109,7 @@ done
 echo
 
 # ------------------------------------------------------------
-# Pass 3: Final confirmation + deploy
+# Pass 2: Final confirmation
 # ------------------------------------------------------------
 
 echo "==> Final confirmation"
@@ -132,7 +136,10 @@ esac
 
 echo
 
-# Perform the actual deployment
+# ------------------------------------------------------------
+# Pass 3: Deploy configs (COPY ONLY)
+# ------------------------------------------------------------
+
 for cfg in "${APPROVED_CONFIGS[@]}"; do
   SRC="$DOTFILES_DIR/$cfg"
   DEST="$TARGET_DIR/$cfg"
@@ -144,32 +151,39 @@ for cfg in "${APPROVED_CONFIGS[@]}"; do
     rm -rf "$DEST"
   fi
 
-  # Copy config from repo into ~/.config
-  cp -a "$SRC" "$DEST"
+  # Copy entire directory structure from repo into ~/.config
+  # -a preserves permissions, timestamps, etc.
+  # -L follows symlinks (copies actual files, not symlinks)
+  cp -aL "$SRC" "$DEST"
+
+  echo "    Copied $SRC -> $DEST"
 done
 
 echo
 echo "==> Configuration deployment complete."
 
 # ------------------------------------------------------------
-# Stage 4: GTK theme activation
+# Pass 4: GTK theme activation
 # ------------------------------------------------------------
 
+echo
 echo "==> Applying GTK theme settings"
 
 # Ensure gsettings is available
 if ! command -v gsettings &>/dev/null; then
-  echo "ERROR: gsettings not found. GTK theming cannot be applied."
-  exit 1
+  echo "WARNING: gsettings not found. Skipping GTK theming."
+else
+  # GTK theme
+  gsettings set org.gnome.desktop.interface gtk-theme "Nordic-Darker"
+
+  # Icon theme
+  gsettings set org.gnome.desktop.interface icon-theme "Snow"
+
+  # Prefer dark color scheme
+  gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
+
+  echo "==> GTK theme settings applied"
 fi
 
-# GTK theme
-gsettings set org.gnome.desktop.interface gtk-theme "Nordic-Darker"
-
-# Icon theme
-gsettings set org.gnome.desktop.interface icon-theme "Snow"
-
-# Prefer dark color scheme
-gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
-
-echo "==> GTK theme settings applied"
+echo
+echo "==> Deployment complete!"
