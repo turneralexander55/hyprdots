@@ -34,6 +34,10 @@ echo
 
 "$SCRIPT_DIR/init-user.sh"
 
+echo
+echo "==> Initialization complete"
+echo
+
 # ------------------------------------------------------------
 # Stage 3: Deploy configuration files
 # ------------------------------------------------------------

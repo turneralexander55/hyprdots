@@ -23,6 +23,7 @@ xdg-desktop-portal-gtk
 dbus
 xorg-xwayland
 nano
+tree
 
 # ============================================================
 # Screenshots / screen sharing (Wayland)
