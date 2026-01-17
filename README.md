@@ -25,6 +25,9 @@ Anything destructive is guarded and opt-in.
 This structure reflects real-world infrastructure and DevOps best practices.
 
 ---
+### Install Process
+
+This repository is intended to be installed on a fresh minimimal profile archinstall
 
 Install with:
 
