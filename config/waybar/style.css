@@ -8,6 +8,18 @@ window#waybar {
     background: transparent;
 }
 
+#modules-left {
+    margin-right: auto;
+}
+
+#modules-center {
+    margin: 0 auto;
+}
+
+#modules-right {
+    margin-left: auto;
+}
+
 /* Left pill: workspaces */
 #workspaces {
     background: rgba(0, 0, 0, 1);
@@ -59,6 +71,7 @@ window#waybar {
 /* Right-side pills */
 /* Right-side pills */
 #cpu,
+#temperature,
 #memory,
 #pulseaudio,
 #network {
