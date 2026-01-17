@@ -15,24 +15,25 @@
     "clock"
   ],
 
-"modules-right": [
-  "cpu",
-  "temperature",
-  "memory",
-  "pulseaudio",
-  "network"
-],
+  "modules-right": [
+    "cpu",
+    "temperature",
+    "memory",
+    "pulseaudio",
+    "network"
+  ],
 
-"hyprland/workspaces": {
-  "format": "{icon}",
-  "on-click": "activate",
-  "all-outputs": false,
-  "persistent-workspaces": {
-    "DP-1": [1, 2, 3],
-    "DP-2": [4, 5, 6],
-    "HDMI-A-2": [7, 8, 9]
-  }
-},
+  "hyprland/workspaces": {
+    "format": "{name}",
+    "on-click": "activate",
+    "all-outputs": false,
+    "active-only": true,
+    "persistent-workspaces": {
+      "DP-1": [1, 2, 3],
+      "DP-2": [4, 5, 6],
+      "HDMI-A-2": [7, 8, 9]
+    }
+  },
 
   "hyprland/window": {
     "format": "{title}",
@@ -44,35 +45,35 @@
     "format": "{:%H:%M}"
   },
 
-"pulseaudio": {
-  "format": "󰕾 {volume}%",
-  "format-muted": "󰖁 muted",
-  "format-icons": {
-    "default": ["󰕿", "󰖀", "󰕾"]
+  "pulseaudio": {
+    "format": "󰕾 {volume}%",
+    "format-muted": "󰖁 muted",
+    "format-icons": {
+      "default": ["󰕿", "󰖀", "󰕾"]
+    },
+    "scroll-step": 5
   },
-  "scroll-step": 5
-},
 
-"cpu": {
-  "format": " {usage}%",
-  "tooltip": false
-},
+  "cpu": {
+    "format": " {usage}%",
+    "tooltip": false
+  },
 
-"memory": {
-  "format": "󰘚 {used:0.1f}G",
-  "tooltip": false
-},
+  "memory": {
+    "format": "󰘚 {used:0.1f}G",
+    "tooltip": false
+  },
 
 
-"network": {
-  "format-wifi": "󰤨 {signalStrength}%",
-  "format-ethernet": "󰈀 eth",
-  "format-disconnected": "󰤭 down",
-  "tooltip": false
-},
+  "network": {
+    "format-wifi": "󰤨 {signalStrength}%",
+    "format-ethernet": "󰈀 eth",
+    "format-disconnected": "󰤭 down",
+    "tooltip": false
+  },
 
-"temperature": {
-  "format": " {temperatureC}°",
-  "tooltip": false
-}
+  "temperature": {
+    "format": " {temperatureC}°",
+    "tooltip": false
+  }
 }
