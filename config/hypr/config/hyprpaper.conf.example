@@ -1,7 +1,0 @@
-preload = ~/hyprdots/assets/wallpapers/default.jpg
-
-wallpaper {
-  monitor = ,
-  path = ~/hyprdots/assets/wallpapers/Berserk.jpg
-  fit_mode = cover
-}

@@ -152,69 +152,6 @@ echo
 echo "==> Configuration deployment complete."
 
 # ------------------------------------------------------------
-# Install .example configs (prompted, safe)
-# ------------------------------------------------------------
-
-echo "==> Installing Hyprland config templates (.example)"
-echo
-
-HYPER_CONFIG_DIR="$TARGET_DIR/hypr/config"
-
-if [[ -d "$HYPER_CONFIG_DIR" ]]; then
-  shopt -s nullglob
-
-  examples=("$HYPER_CONFIG_DIR"/*.example)
-
-  if [[ ${#examples[@]} -eq 0 ]]; then
-    echo "No .example files found."
-  else
-    for example in "${examples[@]}"; do
-      target="${example%.example}"
-      name="$(basename "$target")"
-
-      read -r -p "Install config '$name'? [y/N] " reply
-      echo
-
-      case "$reply" in
-        y|Y|yes|YES)
-          echo "Installing $name"
-          cp -f "$example" "$target"
-          ;;
-        *)
-          echo "Skipping $name"
-          ;;
-      esac
-    done
-  fi
-
-  shopt -u nullglob
-else
-  echo "No Hyprland config directory found; skipping template installation."
-fi
-
-
-
-# ------------------------------------------------------------
-# Hyprpaper config (special-case location)
-# ------------------------------------------------------------
-echo "test1"
-echo "==> Installing hyprpaper.conf (forced)"
-
-HYPERPAPER_EXAMPLE="$TARGET_DIR/hypr/config/hyprpaper.conf.example"
-HYPERPAPER_TARGET="$TARGET_DIR/hypr/hyprpaper.conf"
-echo "test2"
-# Ensure destination directory exists
-mkdir -p "$(dirname "$HYPERPAPER_TARGET")"
-
-# Only proceed if the template exists in the repo install
-if [[ -f "$HYPERPAPER_EXAMPLE" ]]; then
-  cp -f "$HYPERPAPER_EXAMPLE" "$HYPERPAPER_TARGET"
-  echo "hyprpaper.conf installed"
-else
-  echo "WARNING: hyprpaper.conf.example not found, skipping"
-fi
-echo "test3"
-# ------------------------------------------------------------
 # Stage 4: GTK theme activation
 # ------------------------------------------------------------
 
