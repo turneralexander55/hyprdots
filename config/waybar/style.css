@@ -1,91 +1,140 @@
+/* ============================================================
+   Waybar CSS – Pill Layout (GTK CSS Compatible)
+   ------------------------------------------------------------
+   Goals:
+   - Left: Workspaces + Window title
+   - Center: Clock (prominent)
+   - Right: Updates, CPU, Memory, Audio, Network
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   GLOBAL RESET
+   ------------------------------------------------------------ */
 * {
-    all: unset;
+    border: none;
+    border-radius: 0;
     font-family: "IBM Plex Mono";
     font-size: 11px;
+    min-height: 0;
 }
 
+/* ------------------------------------------------------------
+   WAYBAR ROOT WINDOW
+   ------------------------------------------------------------ */
 window#waybar {
     background: transparent;
 }
 
-#modules-left {
-    margin-right: auto;
-}
+/* ============================================================
+   LEFT SIDE – WORKSPACES + WINDOW TITLE
+   ============================================================ */
 
-#modules-center {
-    margin: 0 auto;
-}
-
-#modules-right {
-    margin-left: auto;
-}
-
-/* Left pill: workspaces */
+/* ------------------------------------------------------------
+   WORKSPACE PILL
+   ------------------------------------------------------------ */
 #workspaces {
     background: rgba(0, 0, 0, 1);
     padding: 6px 10px;
+    margin-right: 8px;
     border-radius: 999px;
 }
 
-/* Workspace dots */
+/* Workspace buttons */
 #workspaces button {
     padding: 0 5px;
     color: #666666;
+    background: transparent;
+    border: none;
+    border-radius: 0;
 }
 
+/* Active workspace */
 #workspaces button.active {
     color: #f2f2f2;
 }
 
-/* Client title pill */
+/* Hover effect */
+#workspaces button:hover {
+    color: #aaaaaa;
+    background: transparent;
+}
+
+/* ------------------------------------------------------------
+   WINDOW TITLE PILL
+   ------------------------------------------------------------ */
 #window {
     background: rgba(0, 0, 0, 1);
     padding: 6px 12px;
+    margin-right: 8px;
     border-radius: 999px;
-    margin-left: 8px;
-
     color: #bbbbbb;
-    letter-spacing: 0.5px;
 }
 
-/* Hide the pill when no window is focused */
+/* Hide pill when no window is focused */
+window#waybar.empty #window,
 #window.empty {
-    opacity: 0;
+    background: transparent;
+    padding: 0;
+    margin: 0;
 }
 
-/* Center pill: clock (bigger & bolder) */
+/* ------------------------------------------------------------
+   UPDATES PILL (LEFT SIDE)
+   ------------------------------------------------------------ */
+#custom-updates {
+    background: rgba(0, 0, 0, 1);
+    padding: 6px 12px;
+    border-radius: 999px;
+    color: #88c0d0;
+}
+
+/* Highlight when updates are available */
+#custom-updates.has-updates {
+    color: #ebcb8b;
+}
+
+/* ============================================================
+   CENTER – CLOCK (PRIMARY FOCAL POINT)
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   CLOCK PILL
+   ------------------------------------------------------------ */
 #clock {
     background: rgba(0, 0, 0, 1);
     padding: 8px 20px;
     border-radius: 999px;
-
     font-size: 16px;
     font-weight: 700;
-
     color: #f5f5f5;
-    letter-spacing: 1.2px;
-
-    font-feature-settings: "tnum";
 }
 
-/* Right-side pills */
-/* Right-side pills */
-#cpu,
-#temperature,
-#memory,
+/* ============================================================
+   RIGHT SIDE – SYSTEM STATS
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   SHARED STYLE FOR RIGHT-SIDE MODULES
+   ------------------------------------------------------------ */
+#custom-gpu,
+#custom-cpu,
+#custom-memory,
 #pulseaudio,
 #network {
     background: rgba(0, 0, 0, 1);
     padding: 6px 12px;
-    border-radius: 999px;
     margin-left: 8px;
-
+    border-radius: 999px;
     color: #e6e6e6;
-    letter-spacing: 0.5px;
 }
 
-/* Quiet / inactive states */
-#pulseaudio.muted,
+/* ------------------------------------------------------------
+   QUIET / INACTIVE STATES
+   ------------------------------------------------------------ */
+#pulseaudio.muted {
+    color: #777777;
+}
+
 #network.disconnected {
     color: #777777;
 }

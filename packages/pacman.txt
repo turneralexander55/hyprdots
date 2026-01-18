@@ -24,6 +24,9 @@ dbus
 xorg-xwayland
 nano
 tree
+vscode
+pavucontrol
+nm-connection-editor
 
 # ============================================================
 # Screenshots / screen sharing (Wayland)
