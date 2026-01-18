@@ -97,6 +97,32 @@ case "$install_nvidia" in
     ;;
 esac
 
+# ============================================================
+# Step 6: Session Manager (SDDM)
+# ============================================================
+
+echo
+read -r -p "Do you want to deploy the SDDM session manager? [y/N] " deploy_sddm
+echo
+
+if [[ "$deploy_sddm" =~ ^([yY]|yes|YES)$ ]]; then
+  echo "==> Deploying SDDM"
+
+  SDDM_SCRIPT="./scripts/install-sddm.sh"
+
+  if [[ ! -f "$SDDM_SCRIPT" ]]; then
+    echo "ERROR: SDDM install script not found:"
+    echo "  $SDDM_SCRIPT"
+    exit 1
+  fi
+
+  chmod +x "$SDDM_SCRIPT"
+
+  "$SDDM_SCRIPT"
+else
+  echo "==> Skipping SDDM deployment"
+fi
+
 echo "======================================"
 echo " Hyprdots installation complete"
 echo
