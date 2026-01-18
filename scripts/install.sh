@@ -64,10 +64,51 @@ echo
 echo "==> Shell configuration complete"
 echo
 
-echo "============================================================"
+# ------------------------------------------------------------
+# Stage 5:  NVIDIA Drivers
+# ------------------------------------------------------------
+
+echo
+read -r -p "Do you want to install NVIDIA drivers? [y/N] " install_nvidia
+echo
+
+case "$install_nvidia" in
+  y|Y|yes|YES)
+    echo "==> NVIDIA install selected"
+
+    NVIDIA_SCRIPT="./scripts/nvidia.sh"
+
+    if [[ ! -f "$NVIDIA_SCRIPT" ]]; then
+      echo "ERROR: NVIDIA install script not found at:"
+      echo "  $NVIDIA_SCRIPT"
+      exit 1
+    fi
+
+    chmod +x "$NVIDIA_SCRIPT"
+
+    if [[ $EUID -ne 0 ]]; then
+      sudo "$NVIDIA_SCRIPT"
+    else
+      "$NVIDIA_SCRIPT"
+    fi
+    ;;
+  *)
+    echo "==> Skipping NVIDIA driver installation"
+    ;;
+esac
+
+echo "======================================"
 echo " Hyprdots installation complete"
 echo
-echo " Rebooting."
-echo "============================================================"
+echo " System will reboot in 5 seconds"
+echo " Press Ctrl+C to cancel"
+echo "======================================"
+echo
 
-reboot
+sleep 5
+
+if [[ $EUID -ne 0 ]]; then
+  sudo reboot
+else
+  reboot
+fi
