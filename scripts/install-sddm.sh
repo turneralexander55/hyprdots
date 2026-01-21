@@ -173,33 +173,3 @@ echo "  Theme: ${THEME_NAME}"
 echo "  Display server: Wayland"
 echo "  Session: Hyprland"
 echo
-
-# Check if we should start SDDM now or reboot
-if systemctl is-active --quiet graphical.target; then
-  echo "==> System is in graphical mode"
-  echo
-  read -r -p "Start SDDM now? This will end your current session. [y/N] " reply
-  echo
-
-  case "$reply" in
-    y|Y|yes|YES)
-      echo "==> Starting SDDM..."
-      systemctl start sddm
-      ;;
-    *)
-      echo "SDDM not started. Start it manually with:"
-      echo "  sudo systemctl start sddm"
-      echo "or reboot your system."
-      ;;
-  esac
-else
-  echo "==> Starting SDDM service..."
-  systemctl start sddm
-fi
-
-echo
-echo "If black screen occurs, press Ctrl+Alt+F2"
-echo "to access TTY and check logs:"
-echo "  sudo journalctl -u sddm -n 50"
-echo
-echo "======================================"
