@@ -27,6 +27,11 @@ tree
 vscode
 pavucontrol
 nm-connection-editor
+sddm
+qt6-wayland
+qt6-svg
+qt6-declarative
+qt6-5compat
 
 # ============================================================
 # Screenshots / screen sharing (Wayland)
