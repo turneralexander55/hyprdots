@@ -37,6 +37,7 @@ Install with:
 git clone https://github.com/turneralexander55/hyprdots.git ~/hyprdots
 cd ~/hyprdots
 chmod +x scripts/*.sh
+chmod +x scripts/waybar/*.sh
 ./scripts/install.sh
 
 
@@ -44,35 +45,36 @@ chmod +x scripts/*.sh
 hyprdots
 ├── assets
 │   ├── SDDM
-│   │   └── blackglass
-│   │       ├── assets
-│   │       │   ├── boycott.ttf
-│   │       │   ├── buttondown.svg
-│   │       │   ├── buttonhover.svg
-│   │       │   ├── buttonup.svg
-│   │       │   ├── cboxhover.svg
-│   │       │   ├── cbox.svg
-│   │       │   ├── comboarrow.svg
-│   │       │   ├── DigitalSegmented.pcf.gz
-│   │       │   ├── HelmetNeue-Regular.otf
-│   │       │   ├── inputhi.svg
-│   │       │   ├── input.svg
-│   │       │   ├── logscreen.svg
-│   │       │   ├── powerdown.svg
-│   │       │   ├── powerhover.svg
-│   │       │   ├── powerup.svg
-│   │       │   ├── rebootdown.svg
-│   │       │   ├── reboothover.svg
-│   │       │   └── rebootup.svg
-│   │       ├── ComboBox.qml
-│   │       ├── LICENSE
-│   │       ├── logscreen.svg
-│   │       ├── Main.qml
-│   │       ├── metadata.desktop
-│   │       ├── preview.png
-│   │       ├── README.md
-│   │       ├── theme.conf
-│   │       └── theme.conf.user
+│   │   ├── blackglass
+│   │   │   ├── assets
+│   │   │   │   ├── boycott.ttf
+│   │   │   │   ├── buttondown.svg
+│   │   │   │   ├── buttonhover.svg
+│   │   │   │   ├── buttonup.svg
+│   │   │   │   ├── cboxhover.svg
+│   │   │   │   ├── cbox.svg
+│   │   │   │   ├── comboarrow.svg
+│   │   │   │   ├── DigitalSegmented.pcf.gz
+│   │   │   │   ├── HelmetNeue-Regular.otf
+│   │   │   │   ├── inputhi.svg
+│   │   │   │   ├── input.svg
+│   │   │   │   ├── logscreen.svg
+│   │   │   │   ├── powerdown.svg
+│   │   │   │   ├── powerhover.svg
+│   │   │   │   ├── powerup.svg
+│   │   │   │   ├── rebootdown.svg
+│   │   │   │   ├── reboothover.svg
+│   │   │   │   └── rebootup.svg
+│   │   │   ├── ComboBox.qml
+│   │   │   ├── LICENSE
+│   │   │   ├── logscreen.svg
+│   │   │   ├── Main.qml
+│   │   │   ├── metadata.desktop
+│   │   │   ├── preview.png
+│   │   │   ├── README.md
+│   │   │   ├── theme.conf
+│   │   │   └── theme.conf.user
+│   │   └── hyprland.desktop
 │   └── wallpapers
 │       ├── Berserk.jpg
 │       ├── blossom.png
@@ -139,6 +141,7 @@ hyprdots
 │   ├── install-sddm.sh
 │   ├── install.sh
 │   ├── nvidea.sh
+│   ├── show-keybindings.sh
 │   ├── symlink-configs.sh
 │   ├── update.sh
 │   └── waybar
