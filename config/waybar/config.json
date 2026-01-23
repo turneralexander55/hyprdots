@@ -44,10 +44,11 @@
 
   "custom/updates": {
     "format": "󰮯 {}",
-    "interval": 3600,
+    "interval": 600,
     "exec": "$HOME/hyprdots/scripts/waybar/updates.sh",
     "return-type": "json",
-    "on-click": "kitty --hold $HOME/hyprdots/scripts/update.sh",
+    "on-click": "kitty --hold $HOME/hyprdots/scripts/update.sh && pkill -RTMIN+8 waybar",
+    "signal": 8,
     "tooltip": true
   },
 

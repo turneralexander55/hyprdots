@@ -32,6 +32,8 @@ qt6-wayland
 qt6-svg
 qt6-declarative
 qt6-5compat
+less
+sysstat
 
 # ============================================================
 # Screenshots / screen sharing (Wayland)
