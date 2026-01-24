@@ -3,5 +3,3 @@ Name=Hyprland
 Comment=An intelligent dynamic tiling Wayland compositor
 Exec=Hyprland
 Type=Application
-DesktopNames=Hyprland
-Keywords=tiling;wm;windowmanager;window;manager;wayland;compositor;

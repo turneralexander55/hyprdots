@@ -38,13 +38,44 @@ pacman -S --needed --noconfirm \
   qt6-wayland \
   qt6-svg \
   qt6-declarative \
-  qt6-5compat
+  qt6-5compat \
+  qt6-virtualkeyboard
 
 # ------------------------------------------------------------
 # Disable other display managers (best-effort)
 # ------------------------------------------------------------
 echo "==> Disabling other display managers (if present)"
 systemctl disable gdm lightdm greetd ly 2>/dev/null || true
+
+# ------------------------------------------------------------
+# Install Hyprland session file FIRST
+# ------------------------------------------------------------
+echo "==> Installing Hyprland Wayland session file"
+
+SESSION_SRC="$REAL_HOME/hyprdots/assets/SDDM/hyprland.desktop"
+SESSION_DST="/usr/share/wayland-sessions/hyprland.desktop"
+
+mkdir -p /usr/share/wayland-sessions
+
+if [[ -f "$SESSION_SRC" ]]; then
+  cp "$SESSION_SRC" "$SESSION_DST"
+  chmod 644 "$SESSION_DST"
+  echo "==> Hyprland session file installed"
+else
+  echo "WARNING: Session file not found at $SESSION_SRC"
+  echo "==> Creating default Hyprland session file"
+
+  cat >"$SESSION_DST" <<'EOF'
+[Desktop Entry]
+Name=Hyprland
+Comment=An intelligent dynamic tiling Wayland compositor
+Exec=Hyprland
+Type=Application
+DesktopNames=Hyprland
+EOF
+
+  chmod 644 "$SESSION_DST"
+fi
 
 # ------------------------------------------------------------
 # Install custom SDDM theme: blackglass
@@ -58,65 +89,67 @@ THEME_NAME="blackglass"
 if [[ -d "$THEME_SRC" ]]; then
   echo "==> Found custom theme at $THEME_SRC"
 
-  rm -rf "$THEME_DST"
-  cp -r "$THEME_SRC" "$THEME_DST"
-
-  if [[ -d "$THEME_DST" ]]; then
-    echo "==> Blackglass theme installed successfully"
-  else
-    echo "WARNING: Theme copy failed, falling back to breeze"
+  # Verify theme has required files
+  if [[ ! -f "$THEME_SRC/Main.qml" ]]; then
+    echo "ERROR: Theme missing Main.qml - theme is incomplete"
+    echo "==> Falling back to breeze theme"
     THEME_NAME="breeze"
-    pacman -S --needed --noconfirm qt6-svg
+  elif [[ ! -f "$THEME_SRC/metadata.desktop" ]]; then
+    echo "ERROR: Theme missing metadata.desktop - theme is incomplete"
+    echo "==> Falling back to breeze theme"
+    THEME_NAME="breeze"
+  else
+    # Theme looks valid, install it
+    rm -rf "$THEME_DST"
+    cp -r "$THEME_SRC" "$THEME_DST"
+
+    # Set correct permissions
+    chmod 755 "$THEME_DST"
+    find "$THEME_DST" -type f -exec chmod 644 {} \;
+    find "$THEME_DST" -type d -exec chmod 755 {} \;
+
+    if [[ -d "$THEME_DST" ]]; then
+      echo "==> Blackglass theme installed successfully"
+    else
+      echo "WARNING: Theme copy failed, falling back to breeze"
+      THEME_NAME="breeze"
+    fi
   fi
 else
   echo "WARNING: Custom theme not found at $THEME_SRC"
   echo "==> Falling back to breeze theme"
   THEME_NAME="breeze"
-  pacman -S --needed --noconfirm qt6-svg
+fi
+
+# Install breeze if needed
+if [[ "$THEME_NAME" == "breeze" ]]; then
+  pacman -S --needed --noconfirm sddm-breeze
 fi
 
 # ------------------------------------------------------------
-# Configure SDDM theme
+# Configure SDDM
 # ------------------------------------------------------------
-echo "==> Setting SDDM theme to: ${THEME_NAME}"
+echo "==> Configuring SDDM"
 
 mkdir -p /etc/sddm.conf.d
 
-cat >/etc/sddm.conf.d/theme.conf <<EOF
-[Theme]
-Current=${THEME_NAME}
-EOF
-
-# ------------------------------------------------------------
-# Install Hyprland session file
-# ------------------------------------------------------------
-echo "==> Installing Hyprland Wayland session file"
-
-SESSION_SRC="$REAL_HOME/hyprdots/assets/SDDM/hyprland.desktop"
-SESSION_DST="/usr/share/wayland-sessions/hyprland.desktop"
-
-mkdir -p /usr/share/wayland-sessions
-
-if [[ -f "$SESSION_SRC" ]]; then
-  cp "$SESSION_SRC" "$SESSION_DST"
-  echo "==> Hyprland session file installed"
-else
-  echo "ERROR: Session file not found at $SESSION_SRC"
-  exit 1
-fi
-
-# ------------------------------------------------------------
-# Configure SDDM for Wayland
-# ------------------------------------------------------------
-echo "==> Configuring SDDM for Wayland sessions"
-
-cat >/etc/sddm.conf.d/wayland.conf <<EOF
+# Main SDDM configuration
+cat >/etc/sddm.conf.d/hyprdots.conf <<EOF
 [General]
 DisplayServer=wayland
 GreeterEnvironment=QT_WAYLAND_SHELL_INTEGRATION=layer-shell
 
+[Theme]
+Current=${THEME_NAME}
+
 [Wayland]
-CompositorCommand=kwin_wayland --no-lockscreen --no-global-shortcuts --locale1
+# SDDM will use its built-in Wayland compositor
+# Leave empty to use default (most reliable)
+
+[Users]
+# Allow all users
+MaximumUid=60513
+MinimumUid=1000
 EOF
 
 # ------------------------------------------------------------
@@ -149,6 +182,21 @@ fi
 # Check theme
 if [[ -d "/usr/share/sddm/themes/${THEME_NAME}" ]]; then
   echo "✓ Theme '${THEME_NAME}' installed"
+
+  # Verify theme structure
+  if [[ "$THEME_NAME" == "blackglass" ]]; then
+    if [[ -f "/usr/share/sddm/themes/blackglass/Main.qml" ]]; then
+      echo "  ✓ Main.qml found"
+    else
+      echo "  ✗ WARNING: Main.qml missing"
+    fi
+
+    if [[ -f "/usr/share/sddm/themes/blackglass/metadata.desktop" ]]; then
+      echo "  ✓ metadata.desktop found"
+    else
+      echo "  ✗ WARNING: metadata.desktop missing"
+    fi
+  fi
 else
   echo "✗ WARNING: Theme '${THEME_NAME}' not found"
 fi
@@ -172,4 +220,11 @@ echo "Configuration summary:"
 echo "  Theme: ${THEME_NAME}"
 echo "  Display server: Wayland"
 echo "  Session: Hyprland"
+echo "  Config: /etc/sddm.conf.d/hyprdots.conf"
+echo
+echo "To test SDDM without rebooting:"
+echo "  sudo systemctl start sddm"
+echo
+echo "To view SDDM logs if issues occur:"
+echo "  journalctl -u sddm -b"
 echo
