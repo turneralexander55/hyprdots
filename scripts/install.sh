@@ -64,41 +64,8 @@ echo
 echo "==> Shell configuration complete"
 echo
 
-# ------------------------------------------------------------
-# Stage 5:  NVIDIA Drivers
-# ------------------------------------------------------------
-
-echo
-read -r -p "Do you want to install NVIDIA drivers? [y/N] " install_nvidia
-echo
-
-case "$install_nvidia" in
-  y|Y|yes|YES)
-    echo "==> NVIDIA install selected"
-
-    NVIDIA_SCRIPT="./scripts/nvidia.sh"
-
-    if [[ ! -f "$NVIDIA_SCRIPT" ]]; then
-      echo "ERROR: NVIDIA install script not found at:"
-      echo "  $NVIDIA_SCRIPT"
-      exit 1
-    fi
-
-    chmod +x "$NVIDIA_SCRIPT"
-
-    if [[ $EUID -ne 0 ]]; then
-      sudo "$NVIDIA_SCRIPT"
-    else
-      "$NVIDIA_SCRIPT"
-    fi
-    ;;
-  *)
-    echo "==> Skipping NVIDIA driver installation"
-    ;;
-esac
-
 # ============================================================
-# Step 6: Session Manager (SDDM)
+# Step 5: Session Manager (SDDM)
 # ============================================================
 
 echo
